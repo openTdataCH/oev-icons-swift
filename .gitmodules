@@ -1,0 +1,6 @@
+[submodule "sbb-pictograms"]
+	path = sbb-pictograms
+	url = https://github.com/sbb-design-systems/sbb-pictograms.git
+[submodule "sbb-icons"]
+	path = sbb-icons
+	url = https://github.com/sbb-design-systems/sbb-icons.git
