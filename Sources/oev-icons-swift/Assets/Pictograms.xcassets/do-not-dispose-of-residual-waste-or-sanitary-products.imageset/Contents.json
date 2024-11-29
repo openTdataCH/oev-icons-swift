@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "do-not-dispose-of-residual-waste-or-sanitary-products.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
+  }
+}

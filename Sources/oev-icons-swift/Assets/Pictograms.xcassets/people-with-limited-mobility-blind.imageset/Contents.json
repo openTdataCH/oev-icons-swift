@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "people-with-limited-mobility-blind.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
+  }
+}

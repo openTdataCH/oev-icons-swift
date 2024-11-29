@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "do-not-throw-items-out-of-the-window-framed.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
+  }
+}
