@@ -88,6 +88,8 @@ func createEnum(name: String, imageNames: [String]) -> String {
     import SwiftUI
 
     public enum \(name) {
+    
+        public static let bundle = Bundle.module
 
     \(tuples.map { key, image in
         "    public static let \(key) = SwiftUI.Image(\"\(image)\", bundle: Bundle.module)"

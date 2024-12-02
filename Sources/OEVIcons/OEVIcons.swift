@@ -2,6 +2,8 @@ import SwiftUI
 
 public enum OEVIcons {
 
+    public static let bundle = Bundle.module
+
     public static let add_stop = SwiftUI.Image("add-stop", bundle: Bundle.module)
     public static let adult_kids_large = SwiftUI.Image("adult-kids-large", bundle: Bundle.module)
     public static let aerosol_can_large = SwiftUI.Image("aerosol-can-large", bundle: Bundle.module)

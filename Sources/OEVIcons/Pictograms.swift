@@ -2,6 +2,8 @@ import SwiftUI
 
 public enum Pictograms {
 
+    public static let bundle = Bundle.module
+
     public static let _1st_class_framed = SwiftUI.Image("1st-class-framed", bundle: Bundle.module)
     public static let _1st_class = SwiftUI.Image("1st-class", bundle: Bundle.module)
     public static let _2nd_class_framed = SwiftUI.Image("2nd-class-framed", bundle: Bundle.module)
