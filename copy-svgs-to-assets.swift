@@ -7,7 +7,7 @@ struct Config {
 
     static let iconSets = [
         ("sbb-pictograms/picto", "Pictograms"),
-        ("sbb-icons/icons", "SBBIcons"),
+        ("sbb-icons/icons", "OeVIcons"),
     ]
 }
 

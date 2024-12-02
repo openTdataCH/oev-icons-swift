@@ -18,9 +18,5 @@ let package = Package(
         .target(
             name: "oev-icons-swift",
             resources: [.process("Assets")]),
-        .testTarget(
-            name: "oev-icons-swiftTests",
-            dependencies: ["oev-icons-swift"]
-        ),
     ]
 )
