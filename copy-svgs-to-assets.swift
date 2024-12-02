@@ -3,11 +3,11 @@
 import Foundation
 
 struct Config {
-    static let sourcePath: String = "Sources/oev-icons-swift"
+    static let sourcePath: String = "Sources/OEVIcons"
 
     static let iconSets = [
         ("sbb-pictograms/picto", "Pictograms"),
-        ("sbb-icons/icons", "OeVIcons"),
+        ("sbb-icons/icons", "OEVIcons"),
     ]
 }
 

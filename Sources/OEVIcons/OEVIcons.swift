@@ -1,6 +1,6 @@
 import SwiftUI
 
-public enum OeVIcons {
+public enum OEVIcons {
 
     public static let add_stop = SwiftUI.Image("add-stop", bundle: Bundle.module)
     public static let adult_kids_large = SwiftUI.Image("adult-kids-large", bundle: Bundle.module)
