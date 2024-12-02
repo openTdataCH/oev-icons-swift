@@ -2,30 +2,71 @@
 
 import Foundation
 
+struct Config {
+    static let sourcePath: String = "Sources/oev-icons-swift"
+
+    static let iconSets = [
+        ("sbb-pictograms/picto", "Pictograms"),
+        ("sbb-icons/icons", "SBBIcons"),
+    ]
+}
+
 func main() {
     let filePath = #filePath
     guard let workingDir = URL(string: filePath)?.deletingLastPathComponent()
     else {
         fatalError()
     }
-    let pictogramURL = workingDir.appending(path: "sbb-pictograms/picto")
-    let assetRootURL = workingDir.appending(
-        path: "Sources/oev-icons-swift/Assets/Pictograms.xcassets")
-    do {
-        let files = try FileManager.default.contentsOfDirectory(
-            atPath: pictogramURL.path())
-        for fileName in files where fileName.hasSuffix("svg") {
-            try createImageSet(
-                assetsPath: assetRootURL.path(), fileName: fileName,
-                sourcePath: pictogramURL.path())
+    for ((originals, title)) in Config.iconSets {
+        let pictogramURL = workingDir.appending(path: originals)
+        let assetRootURL = workingDir.appending(
+            path: "\(Config.sourcePath)/Assets/\(title).xcassets")
+        do {
+            print("🚀 Start Creating Assets for \(title)")
+            let assetRootPath = assetRootURL.path()
+            
+            if FileManager.default.fileExists(atPath: assetRootPath) {
+            try FileManager.default.removeItem(atPath: assetRootPath)
+               print("🗑️  Deleted previous xcassets directory")
+            }
+         
+            try FileManager.default.createDirectory(atPath: assetRootPath, withIntermediateDirectories: true, attributes: nil)
+
+            let defaultJSON = """
+            {
+                "info" : {
+                    "author" : "xcode",
+                    "version" : 1
+                }
+            }
+            """
+
+            FileManager.default.createFile(
+                atPath: "\(assetRootPath)/Contents.json",
+                contents: defaultJSON.data(using: .utf8), 
+                attributes: nil)
+
+            let files = try FileManager.default.contentsOfDirectory(
+                atPath: pictogramURL.path())
+            for fileName in files where fileName.hasSuffix("svg") {
+                try createImageSet(
+                    assetsPath: assetRootPath, 
+                    fileName: fileName,
+                    sourcePath: pictogramURL.path())
+            }
+            let enumContent = createEnum(name: title, imageNames: files)
+            FileManager.default.createFile(
+                atPath: "\(workingDir.path())/\(Config.sourcePath)/\(title).swift",
+                contents: enumContent.data(using: .utf8),
+                attributes: nil)
+
+            print("📋 Imported \(files.count) icons to \(title).xcassets")
+        } catch {
+            print(error.localizedDescription)
         }
-        let enumContent = createEnum(name: "Pictograms", imageNames: files)
-        FileManager.default.createFile(
-            atPath: "\(workingDir.path())/Sources/oev-icons-swift/\("Pictograms").swift",
-            contents: enumContent.data(using: .utf8), attributes: nil)
-    } catch {
-        print(error.localizedDescription)
     }
+
+    print("✅ done.")
 }
 
 func createEnum(name: String, imageNames: [String]) -> String {
@@ -71,7 +112,8 @@ func createImageSet(assetsPath: String, fileName: String, sourcePath: String)
     let json = contentsJSON(fileName: fileName)
     FileManager.default.createFile(
         atPath: "\(imageSetPath)/Contents.json",
-        contents: json.data(using: .utf8), attributes: nil)
+        contents: json.data(using: .utf8), 
+        attributes: nil)
 }
 
 func contentsJSON(fileName: String) -> String {
