@@ -2,12 +2,25 @@
 
 import Foundation
 
+struct IconSet {
+    let sourcePath: String
+    let key: String
+    let name: String
+    let includedTags: [String]?
+
+    init(sourcePath: String, key: String, name: String, includedTags: [String]? = nil) {
+        self.sourcePath = sourcePath
+        self.key = key
+        self.name = name
+        self.includedTags = includedTags
+    }
+}
+
 struct Config {
     static let sourcePath: String = "Sources/OEVIcons"
-
     static let iconSets = [
-        ("sbb-pictograms/picto", "Pictograms"),
-        ("sbb-icons/icons", "OEVIcons"),
+        IconSet(sourcePath: "sbb-pictograms/picto", key: "picto", name: "Pictograms"),
+        IconSet(sourcePath: "sbb-icons/icons", key: "icons", name: "OEVIcons", includedTags: ["timetable-icons","Product-Brands"]),
     ]
 }
 
@@ -17,8 +30,13 @@ func main() {
     else {
         fatalError()
     }
-    for ((originals, title)) in Config.iconSets {
-        let pictogramURL = workingDir.appending(path: originals)
+
+    for iconSet in Config.iconSets {
+        let originals = iconSet.sourcePath
+        let title = iconSet.name
+        let indexJSONURL = workingDir
+                                    .appending(path: originals)
+                                    .appending(path: "index.json")
         let assetRootURL = workingDir.appending(
             path: "\(Config.sourcePath)/Assets/\(title).xcassets")
         do {
@@ -33,34 +51,58 @@ func main() {
             try FileManager.default.createDirectory(atPath: assetRootPath, withIntermediateDirectories: true, attributes: nil)
 
             let defaultJSON = """
-            {
-                "info" : {
-                    "author" : "xcode",
-                    "version" : 1
-                }
-            }
-            """
+             {
+                 "info" : {
+                     "author" : "xcode",
+                     "version" : 1
+                 }
+             }
+             """
 
             FileManager.default.createFile(
                 atPath: "\(assetRootPath)/Contents.json",
                 contents: defaultJSON.data(using: .utf8), 
                 attributes: nil)
 
-            let files = try FileManager.default.contentsOfDirectory(
-                atPath: pictogramURL.path())
-            for fileName in files where fileName.hasSuffix("svg") {
-                try createImageSet(
-                    assetsPath: assetRootPath, 
-                    fileName: fileName,
-                    sourcePath: pictogramURL.path())
+            guard let data = FileManager.default.contents(atPath: indexJSONURL.path()) else {
+                fatalError("empty directory")
             }
-            let enumContent = createEnum(name: title, imageNames: files)
-            FileManager.default.createFile(
-                atPath: "\(workingDir.path())/\(Config.sourcePath)/\(title).swift",
-                contents: enumContent.data(using: .utf8),
-                attributes: nil)
 
-            print("📋 Imported \(files.count) icons to \(title).xcassets")
+            let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            if let icons = json?[iconSet.key] as? [[String: Any?]]  {
+                let files: [String] = icons.compactMap { icon in
+                    if let includedTags = iconSet.includedTags,
+                       let tags = icon["tags"] as? [String] {
+                       let shouldInclude = includedTags.contains { tagToInclude in
+                            tags.contains(tagToInclude)
+                        }
+                        if shouldInclude {
+                            return icon["name"] as? String
+                        }
+                        // print("⚠️  Skipping \(icon["name"] as? String ?? "?")")
+                        return nil
+                    } else {
+                        return icon["name"] as? String
+                    }
+                }
+
+                for file in files {
+                    let fileName = "\(file).svg"
+                    let filePath = workingDir.appending(path: originals)
+                        .appending(path: fileName).path()
+                    if FileManager.default.fileExists(atPath: filePath) {
+                        try createImageSet(
+                            assetsPath: assetRootPath,
+                            fileName: fileName,
+                            sourcePath: workingDir.appending(path: originals).path())
+
+                    }
+                }
+                let ignoredCount = icons.count - files.count
+                let ignored = ignoredCount > 0 ? " – \(ignoredCount) Files ignored" : ""
+                print("📋 Imported \(files.count) icons to \(title).xcassets\(ignored)")
+            }
+            
         } catch {
             print(error.localizedDescription)
         }
