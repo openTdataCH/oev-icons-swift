@@ -1,4 +1,4 @@
-# ![information icon](./sbb-pictograms/picto/information-framed.svg) OeV Icons Swift
+# OeV Icons Swift
 
 ⚠️ This is a proof of concept to expose the official swiss [OeV Icons](https://digital.sbb.ch/en/foundation/assets/fpl/) as a Swift Package to be used on Apple platform applications. If this turns out to be usable, it will be moved to a community led GitHub project.
 
