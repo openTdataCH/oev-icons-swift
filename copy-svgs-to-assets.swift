@@ -55,8 +55,12 @@ func main() {
                  "info" : {
                      "author" : "xcode",
                      "version" : 1
+                 },
+                 "properties" : {
+                     "generate-swift-asset-symbol-extensions" : "disabled"
                  }
              }
+
              """
 
             FileManager.default.createFile(
@@ -137,6 +141,7 @@ func createEnum(name: String, imageNames: [String]) -> String {
         "    public static let \(key) = SwiftUI.Image(\"\(image)\", bundle: Bundle.module)"
     }.joined(separator: "\n"))
     }
+    
     """
 
     return content
