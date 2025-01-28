@@ -1,18 +1,33 @@
 # OeV Icons Swift
 
-⚠️ This is a proof of concept to expose the official swiss [OeV Icons](https://digital.sbb.ch/en/foundation/assets/fpl/) as a Swift Package to be used on Apple platform applications. If this turns out to be usable, it will be moved to a community led GitHub project.
+This project exposes the official swiss [OeV Icons](https://digital.sbb.ch/en/foundation/assets/fpl/) as a Swift Package to be used on Apple platform applications.
 
 ## Background
 
-SBB publishes three icon sets on GitHub. `SBB Icons` and `Timetable Icons` are published on [sbb-design-systems/sbb-icons](https://github.com/sbb-design-systems/sbb-icons). The `Pictograms` are published on [sbb-design-systems/sbb-pictograms](https://github.com/sbb-design-systems/sbb-pictograms).
+SBB publishes these icon sets on GitHub under an [Apache License](./LICENSE). [`SBB Icons`](https://digital.sbb.ch/en/foundation/assets/icons/) and [`Timetable Icons`](https://digital.sbb.ch/en/foundation/assets/fpl/) are published on [sbb-design-systems/sbb-icons](https://github.com/sbb-design-systems/sbb-icons). The [`Pictograms`](https://digital.sbb.ch/en/foundation/assets/pictos/) are published on [sbb-design-systems/sbb-pictograms](https://github.com/sbb-design-systems/sbb-pictograms).
 
-This project adds those two repositories as submodules and imports the `Timetable Icons` and `Pictograms` to an importable Swift Package. Due to usage restrictions on `SBB Icons`, those assets will not be bundled with the package.
+This project adds those two repositories as submodules and imports the `Timetable Icons` and `Pictograms` to an importable Swift Package. 
+
+> Due to [usage restrictions](https://digital.sbb.ch/en/foundation/assets/icons/) on `SBB Icons`, those assets are excluded from the package.
+
+### For more details about icon sets visit:
+
+- [SBB icons](https://digital.sbb.ch/en/foundation/assets/icons/) - Only to be used in SBB led projects. ⚠️ These icons are excluded from the import!
+- [Timetable icons](https://digital.sbb.ch/en/foundation/assets/fpl/)
+- [Pictograms](https://digital.sbb.ch/en/foundation/assets/pictos/)
+
 
 ### Usage
 
 #### Add the Swift Package to your project
 
-`https://github.com/r3to/OeVIconsSwift.git`
+Add `OEVIcons`to your project using Swift Package Manger:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/openTdataCH/oev-icons-swift.git", branch: "main"),
+]
+```
 
 #### Display the icons
 
@@ -36,7 +51,7 @@ struct SampleView: View {
 
 ## TODO
 
-- [ ] check if project can be added to opentransportdata
+- [x] check if project can be added to opentransportdata
 - [ ] transform icon names in generated enum to pascal-case
 - [ ] maybe add helper functions from OJP Sample App
 - [ ] decide about a kotlin/android version
@@ -49,10 +64,6 @@ When the pull request is approved and merged, a new version tag will be set.
 
 ## License
 
+The original icons and this project are published under an Apache License. 
 Make sure you comply with the [right of use](https://digital.sbb.ch/en/foundation/brand/copyrights/).
 
-For more details about icon sets visit:
-
-- [SBB icons](https://digital.sbb.ch/en/foundation/assets/icons/) - Only to be used in SBB led projects. ⚠️ These icons are excluded from the import!
-- [Timetable icons](https://digital.sbb.ch/en/foundation/assets/fpl/)
-- [Pictograms](https://digital.sbb.ch/en/foundation/assets/pictos/)
