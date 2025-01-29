@@ -1,4 +1,6 @@
-# OeV Icons Swift ![cog-railway pictogram](./sbb-pictograms/picto/cog-railway-left-framed.svg) ![self-service pictogram](./sbb-pictograms/picto/self-service-validation-yellow-framed.svg) ![business-zone pictogram](./sbb-pictograms/picto/business-zone-framed.svg)
+# OeV Icons Swift
+
+![oev-icons-preview](./preview/oev-icons-preview.svg)
 
 This project exposes the official swiss [OeV Icons](https://digital.sbb.ch/en/foundation/assets/fpl/) as a Swift Package to be used on Apple platform applications.
 
