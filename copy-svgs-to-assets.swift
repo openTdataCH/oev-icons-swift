@@ -90,7 +90,7 @@ func main() {
                     }
                 }
 
-                for file in files {
+                for file in Set(files) {
                     let fileName = "\(file).svg"
                     let filePath = workingDir.appending(path: originals)
                         .appending(path: fileName).path()
